@@ -1,0 +1,81 @@
+<html>
+<head>
+  <!-- This is the HTML file for HW1 CS275 -->
+  <!-- A web page related to fibonacci number -->
+  <title>Fibonacci number</title>
+</head>
+<body>
+  <h1> Fibonacci Number </h1>
+  <p>
+    In mathematics, the Fibonacci numbers are the numbers in the following integer sequence,
+    called the Fibonacci sequence,
+  </p>
+  <p>and characterized by the fact that every number after the first two is the sum of the two preceding ones.</p>
+  <img src="https://landperspectives.files.wordpress.com/2014/12/1-fibonacci-sequence1.jpg"
+  alt="Fibonacci Icon"
+  style="width:400px;height:200px;">
+  <br></br>
+  <input id = "input1"> <button onclick="compute()">Click to Compute</button>
+  <p id="output1"></p>
+  <script>
+  // compute funciton manages the legal input and its corresponding output.
+  function compute() {
+    var input = parseInt(document.getElementById("input1").value);
+    if(input < 0) {
+      document.getElementById("output1").innerHTML = "Cannot compute Fib of a negative integer";
+      return;
+    }
+    if(isNaN(input)) {
+      document.getElementById("output1").innerHTML = "Invalid Input";
+      return;
+    }
+    var a = 1, b = 0, temp;
+    while (input > 0){
+      temp = a;
+      a = a + b;
+      b = temp;
+      input--;
+    }
+    document.getElementById("output1").innerHTML = b;
+  }
+  </script>
+  <br></br>
+  <input id = "input2"> <button onclick="createTable()">Generate the Table</button>
+  <table id="output2"></table>
+  <script>
+  // makeTable function generates the talbe of the fibonacci numbers from 1 to n.
+  function createTable() {
+    // Clean the data
+    tableData = [["n\xa0\xa0\xa0\xa0", "fib(n)"]];
+    var input = parseInt(document.getElementById("input2").value);
+    var a = 1, b = 0, idx = 0,temp;
+    while (input >= 0){
+      temp = a;
+      a = a + b;
+      tableData.push([idx, b]);
+      b = temp;
+      idx++;
+      input--;
+    }
+    // Create the table
+    var table = document.createElement("table");
+    var tableBody = document.createElement("tbody");
+
+    tableData.forEach(function(row_data) {
+      var row = document.createElement("tr");
+      row_data.forEach(function(cell_data) {
+        var cell = document.createElement("td");
+        cell.appendChild(document.createTextNode(cell_data));
+        row.appendChild(cell);
+      });
+      tableBody.appendChild(row);
+    });
+
+    table.appendChild(tableBody);
+    table.border = "1px";
+    document.getElementById("output2").appendChild(table);
+  }
+
+  </script>
+</body>
+</html>

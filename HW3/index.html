@@ -1,0 +1,52 @@
+<html>
+<head>
+  <!-- This is the HTML file for HW3 CS275 -->
+  <!-- A web page for simple calculation -->
+  <title> A Simple Calculator</title>
+  <!-- Load the scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.1/jquery.min.js">
+  </script>
+</head>
+<body align = "center">
+  <h1 > CS275 HW3 </h1>
+  <input id = "seed" style = "width: 20%; height: 6%"}>
+  <br/>
+  <br/>
+  <select id = "cal_method" style = "width: 20%; height: 6%">
+    <option value="fact">n - Factorial</option>
+    <option value="sum">Summation Series</option>
+  </select>
+  <br/>
+  <br/>
+  <button style = "width: 25%; height: 6%" onclick = "runCalculation()">Click to Calculate!</button>
+  <br/>
+  <br/>
+  <div id = "output" style="text-align: center;"> </div>
+  <script>
+    function runCalculation() {
+      // Construct the URL and seed value
+      var seed = document.getElementById("seed").value;
+      var sel = document.getElementById("cal_method");
+      var method = sel.options[sel.selectedIndex].value;
+      var URL = "http://localhost:8080/";
+      if(method == "sum") var URL = URL + "sum";
+      if(method == "fact") var URL = URL + "fact";
+      var jsonObj = {"seed" : seed};
+
+      // Make the ajax call
+      $.ajax({
+        type: "GET",
+        url: URL,
+        data: jsonObj,
+        dataType: "html",
+        success: function(msg) {
+          document.getElementById("output").innerHTML = msg;
+        },
+        error: function (msg) {
+          document.getElementById("output").innerHTML = "Error!";
+        }
+      });
+    }
+  </script>
+</body>
+</html>

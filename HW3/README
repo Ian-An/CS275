@@ -1,0 +1,3 @@
+1. Make sure the device has node installed.
+2. Run node server.js at the terminal.
+3. Open the browser and type the URL as localhost:8080/index.html

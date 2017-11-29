@@ -1,0 +1,166 @@
+<html>
+<head>
+  <!-- This is the index html file for HW5 CS275 -->
+  <title>HW 5</title>
+  <!-- Load the scripts-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.1/jquery.min.js">
+  </script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js">
+  </script>
+  <link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css"/>
+  </script>
+<head>
+<body>
+  <!-- panel-->
+  <div data-role="panel" id="myPanel">
+    <a href="." onclick="location.reload()">Home</a>
+		<br></br>
+		<a onclick="renderTablePage()" href="#table">Display Table</a>
+    <br></br>
+		<a onclick="renderTranscriptPage()" href="#transcript">Transcripts</a>
+		<br></br>
+		<a onclick="renderAddStudentPage()" href="#addStudent">Add Student</a>
+  </div>
+  <div data-role="header">
+    <h1>HW5</h1>
+    <a href=”#myPanel>Menu</a>
+  </div>
+  <div data-role="content" id="content">
+    <img src="home_image.png" style = "width: 100%"  id="img">
+    <div style="margin-left: 30%">
+      <p> The website has a menu button on the very left-top of the screen. </p>
+      <p> The directory pops up after clicking the menu button. </p>
+      <p> Display table is for fetching data from database. </p>
+      <p> Transcript is for checking a student's transcript of a certain term</p>
+      <p> Add student is for adding a new student record to database</p>
+    </div>
+  </div>
+  <div data-role="footer" data-position="fixed">
+  	<h1>Database Integration Demo</h1>
+  </div>
+</body>
+<script>
+// Render the table page
+function renderTablePage() {
+  var URL = "/tables";
+  $.ajax({
+    type: "GET",
+    url : URL,
+    dataType : "text",
+    data : {},
+    success : function(msg){
+      document.getElementById("content").innerHTML = msg;
+    },
+    error: function(jgXHR, textStatus,errorThrown){
+      alert("Error: " + textStatus + " " + errorThrown);
+    }
+  });
+}
+// Display the seleced table
+function displayTable() {
+  var URL = "./Displaytable";
+  var sel = document.getElementById("table_type");
+  var type = sel.options[sel.selectedIndex].value;
+  var jsonObj_table = {"type" : type};
+  // Make the ajax call
+  $.ajax({
+    type: "GET",
+    url: URL,
+    data: jsonObj_table,
+    dataType: "html",
+    success: function(msg) {
+      document.getElementById("output").innerHTML = msg;
+    },
+    error: function(jgXHR, textStatus,errorThrown){
+      alert("Error: " + textStatus + " " + errorThrown);
+    }
+  });
+}
+
+// Render the transcript page
+function renderTranscriptPage() {
+  var URL = "/transcripts";
+  $.ajax({
+    type: "GET",
+    url : URL,
+    dataType : "text",
+    data : {},
+    success : function(msg){
+      document.getElementById("content").innerHTML = msg;
+    },
+    error: function(jgXHR, textStatus,errorThrown){
+      alert("Error: " + textStatus + " " + errorThrown);
+    }
+  });
+}
+
+
+// Get the trasncript of a certain student
+function displayTranscript() {
+  var URL = "/Displaytranscript";
+  var sel_student = document.getElementById("student_id");
+  var sel_term = document.getElementById("term");
+  var student_id = sel_student.options[sel_student.selectedIndex].value.toString();
+  var term_taken = sel_term.options[sel_term.selectedIndex].value.toString();
+  var jsonObj = {"student_id" : student_id, "term_taken" : term_taken};
+  // Make the ajax call
+  $.ajax({
+    type: "GET",
+    url: URL,
+    data: jsonObj,
+    dataType: "html",
+    success: function(msg) {
+      document.getElementById("output").innerHTML = msg;
+    },
+    error: function(jgXHR, textStatus,errorThrown){
+      alert("Error: " + textStatus + " " + errorThrown);
+    }
+  });
+}
+
+// Render the Add Student page
+function renderAddStudentPage() {
+  var URL = "/Addstudentpage";
+  $.ajax({
+    type: "GET",
+    url : URL,
+    dataType : "text",
+    data : {},
+    success : function(msg){
+      document.getElementById("content").innerHTML = msg;
+    },
+    error: function(jgXHR, textStatus,errorThrown){
+      alert("Error: " + textStatus + " " + errorThrown);
+    }
+  });
+}
+// Add new student
+function addNewStudent() {
+  var URL = "/Addnewstudent";
+  var student_id = document.getElementById("id").value;
+  var major = document.getElementById("major").value;
+  var date_of_birth = document.getElementById("date_of_birth").value;
+  var first_name = document.getElementById("first_name").value;
+  var last_name = document.getElementById("last_name").value;
+  var jsonObj = {"student_id" : student_id,
+  "major" : major,
+  "date_of_birth" : date_of_birth,
+  "first_name" : first_name,
+  "last_name" : last_name
+  };
+  // Make the ajax call
+  $.ajax({
+    type: "GET",
+    url: URL,
+    data: jsonObj,
+    dataType: "html",
+    success: function(msg) {
+      document.getElementById("output").innerHTML = msg;
+    },
+    error: function(jgXHR, textStatus,errorThrown){
+      alert("Error: " + textStatus + " " + errorThrown);
+    }
+  });
+}
+</script>
+</html>

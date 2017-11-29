@@ -1,0 +1,116 @@
+<html>
+<head>
+  <!-- This is the HTML file for HW4 CS275 -->
+  <title>HW 4</title>
+  <!-- Load the scripts-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.1/jquery.min.js">
+  </script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js">
+  </script>
+  <link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css"/>
+  </script>
+</head>
+<body>
+  <!-- panel-->
+  <div data-role="panel" id="myPanel">
+    <a href="." onclick="location.reload()">Home</a>
+		<br></br>
+		<a onclick="showCalculator()" href="#cal">Calculator</a>
+		<br></br>
+		<a onclick="showWeather()" href="#weather">Weather</a>
+  </div>
+  <div data-role="header">
+    <h1>HW4</h1>
+    <a href=”#myPanel>Menu</a>
+  </div>
+  <div data-role="content" id="content">
+    <img src="home_image.png" style = "width: 100%"  id="img">
+    <div style="margin-left: 30%">
+      <p> This is the Home page of the webiste.</p>
+      <p> The website has a menu button on the very left-top of the screen. </p>
+      <p> The directory pops up after clicking the menu button. </p>
+      <p> Calculator page is for factorial and series summation calculation. </p>
+      <p> Weather page is for weather forecast for the next 36 hours. </p>
+    </div>
+  </div>
+  <div data-role="footer" data-position="fixed">
+  	<h1>Yi An</h1>
+  </div>
+  <!-- output -->
+  <script>
+    // Render the calculator page
+    function showCalculator() {
+      var URL = "/cal";
+      $.ajax({
+        type: "GET",
+        url : URL,
+        dataType : "text",
+        data : {},
+        success : function(msg){
+          document.getElementById("content").innerHTML = msg;
+        },
+        error: function(jgXHR, textStatus,errorThrown){
+          alert("Error: " + textStatus + " " + errorThrown);
+        }
+      });
+    }
+    // Run the calculation
+    function runCalculation() {
+      // Construct the URL and seed value
+      var URL = "./cal/";
+      var seed = document.getElementById("seed").value;
+      var sel = document.getElementById("cal_method");
+      var method = sel.options[sel.selectedIndex].value;
+      if(method == "sum") var URL = URL + "sum";
+      if(method == "fact") var URL = URL + "fact";
+      var jsonObj = {"seed" : seed};
+      // Make the ajax call
+      $.ajax({
+        type: "GET",
+        url: URL,
+        data: jsonObj,
+        dataType: "html",
+        success: function(msg) {
+          document.getElementById("output").innerHTML = msg;
+        },
+        error: function(jgXHR, textStatus,errorThrown){
+          alert("Error: " + textStatus + " " + errorThrown);
+        }
+      });
+    }
+    // Render weather page
+    function showWeather() {
+      var URL = "/weather";
+      $.ajax({
+        type: "GET",
+        url : URL,
+        dataType : "text",
+        data : {},
+        success : function(msg){
+          document.getElementById("content").innerHTML = msg;
+        },
+        error: function(jgXHR, textStatus,errorThrown){
+          alert("Error: " + textStatus + " " + errorThrown);
+        }
+      });
+    }
+    // Get weather information
+    function getWeather() {
+      var URL = "/getWeather";
+      $.ajax({
+        type: "GET",
+        url : URL,
+        dataType : "text",
+        data : {},
+        success : function(msg){
+          //console.log(msg);
+          document.getElementById("output").innerHTML = msg;
+        },
+        error: function(jgXHR, textStatus,errorThrown){
+          alert("Error: " + textStatus + " " + errorThrown);
+        }
+      });
+    }
+  </script>
+</body>
+</html>

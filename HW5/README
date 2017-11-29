@@ -1,0 +1,3 @@
+The database of this web application is generated locally.
+To start the server, get directed inside src folder and run command node server.
+Open your browser and go to localhost:8080 to play around with this application.

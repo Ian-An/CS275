@@ -1,0 +1,21 @@
+<nav>
+	<a class="nav_link" onclick="home()" href="#">Home</a>
+	<a class="nav_link" onclick="upload()" href="#">Upload</a>
+	<a class="nav_link" onclick="explore()" href="#">Explore</a>
+	<div class="animation start-home"></div>
+</nav>
+<center>
+	<h1>Upload</h1>
+</center>
+<center>
+<div class="boxed">
+	<form>
+	Item Name: <input type="text" id="itemName"><br><br>
+	List Price: <input type="text" id="listPrice"><br><br>
+	Image URL: <input type="text" id="imageURL"><br><br>
+	Description: <input id="desc" type="text" ><br>
+	<input type="button" value="Submit" onclick="uploadItem()">
+	</form>
+</div>
+<div id="output"> </div>
+</center>

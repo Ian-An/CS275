@@ -1,0 +1,65 @@
+<html>
+<head>
+  <!-- Practicum -->
+  <title> Practicum</title>
+  <!-- Load the scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.1/jquery.min.js">
+  </script>
+</head>
+<body align = "center">
+  <h1 > SEPTA </h1>
+  <br/>
+  <br/>
+  <select id = "route" style = "width: 20%; height: 6%">
+    <option value="6">6</option>
+    <option value="14">14</option>
+    <option value="17">17</option>
+    <option value="20">20</option>
+    <option value="23">23</option>
+  </select>
+  <br/>
+  <br/>
+  <button style = "width: 25%; height: 6%" onclick = "getSeptaInfo()">Route Info</button>
+  <br/>
+  <br/>
+  <div id = "output" style="text-align: center;"> </div>
+  <script>
+    function getSeptaInfo() {
+      // Construct the URL and seed value
+      var sel = document.getElementById("route");
+      var route = sel.options[sel.selectedIndex].value;
+      var URL = "http://www3.septa.org/hackathon/TransitView/?route=" + route;
+      $.ajax({
+        type: "GET",
+        url: URL,
+        data: "{}",
+        dataType: "jsonp",
+        success: function(msg) {
+          var html = '';
+          html = html + '<th>Route</th>';
+          html = html + '<th>Vehicle Number</th>';
+          html = html + '<th>Block ID</th>';
+          html = html + '<th>Direction</th>';
+          html = html + '<th>Destination</th>';
+          html = '<tr>' + html + '</tr>';
+          for(var i = 0; i < msg.bus.length; i++) {
+            var currentRoute = msg.bus[i];
+            html += '<tr>';
+            html += '<td>' + route +'</td>';
+            html += '<td>' + currentRoute.VehicleID +'</td>';
+            html += '<td>' + currentRoute.BlockID +'</td>';
+            html += '<td>' + currentRoute.Direction +'</td>';
+            html += '<td>' + currentRoute.destination +'</td>';
+            html += '</tr>';
+          }
+          html = `<table border='2'>` + html + '</table>';
+          document.getElementById("output").innerHTML = html;
+        },
+        error: function (msg) {
+          document.getElementById("output").innerHTML = "Error!";
+        }
+      });
+    }
+  </script>
+</body>
+</html>

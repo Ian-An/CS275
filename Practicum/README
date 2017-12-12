@@ -1,0 +1,2 @@
+Part1: Check the get request by localhost:8080/part1?message=hello&count=4
+Part2: Double click the septa.html file to start checking route status of Septa
